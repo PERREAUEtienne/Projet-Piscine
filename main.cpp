@@ -13,7 +13,7 @@ int main()
 
 {
         ifstream fichier("broadway.txt", ios::in);
-
+        std::cout << "salutdiego" << std::endl;
         if(fichier)
         {
                 int entier1;
