@@ -3,7 +3,7 @@
 #include "graphe.h"
 #include <vector>
 #include <string>
-
+#include "svgfile.h"
 
 
 
@@ -12,6 +12,7 @@ graphe::graphe(std::string nomFichier,std::string fichierpoids)
 {
     std::ifstream ifs{nomFichier};
     std::ifstream ifs2{fichierpoids};
+
     if (!ifs)
         throw std::runtime_error( "Impossible d'ouvrir en lecture " + nomFichier );
     if (!ifs2)
@@ -22,7 +23,7 @@ graphe::graphe(std::string nomFichier,std::string fichierpoids)
     if ( ifs.fail() )
         throw std::runtime_error("Probleme lecture ordre du graphe");
     int id;
-    float x,y;
+    double x,y;
     //lecture des sommets
 
     for (int i=0; i<nb_sommet; ++i)
@@ -41,7 +42,7 @@ graphe::graphe(std::string nomFichier,std::string fichierpoids)
         m_sommet.push_back(a);
         //std::cout << m_sommet[1].Getx() << std::endl;
         //std::cout << m_sommet[i]->Getid()<< std ::endl;
-        //std::cout << m_sommet[i]->Getx() << std::endl;
+        //std::cout << m_sommet[i]->Gety() << std::endl;
         //std::cout << m_sommet[i]->Gety() << std::endl ;
 
 
@@ -97,17 +98,24 @@ graphe::graphe(std::string nomFichier,std::string fichierpoids)
             arete* c = m_arete [i];
             m_arete[i]=m_arete[i+1];
             m_arete[i+1]= c;
-            std::cout << m_arete[i]->Getpoids1() << std::endl;
+            //std::cout << m_arete[i]->Getpoids1() << std::endl;
 
         }
 
 
 
-    /*for (int i=0; i <nb_arete;i++){
-            if ((m_arete[i]->Gets1()) =! (m_arete[i]->Gets2()))
-                Svgfile::addLine(m_sommet[m_arete[i]->Gets1].Getx, m_sommet[m_arete[i]->Gets1].Gety(), m_sommet[m_arete[i]->Gets2].Getx(),m_sommet[m_arete[i]->Gets2].Gety())
-                setS1[0]*/
 
+    /*for (int i=0; i <nb_arete;i++){
+            if ((m_arete[i]->Gets1()) != (m_arete[i]->Gets2())){
+                svgout.addLine(m_sommet[m_arete[i]->Gets1].Getx(), m_sommet[m_arete[i]->Gets1].Gety(), m_sommet[m_arete[i]->Gets2].Getx(),m_sommet[m_arete[i]->Gets2].Gety(),"blue");
+                m_sommet[i].setX=0
+                m_sommet[i].setY=0
+
+            }
+                for(int j=0; i<nb_arete;j++);{
+                    if ((m_sommet[i]->Getx()) =! 500 )
+                        m_arete[i].Sets1()
+                }*/
     }
         //}
 
