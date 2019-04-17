@@ -11,8 +11,9 @@
 int main()
 
 {
-        std::ifstream fichier("broadway.txt");
-        graphe("broadway.txt");
+
+        graphe("broadway.txt","broadway_weights.txt");
+
 
         return 0;
 }
