@@ -1,22 +1,27 @@
-/*#ifndef SOMMET_H_INCLUDED
+#ifndef SOMMET_H_INCLUDED
 #define SOMMET_H_INCLUDE
 #include <string>
 #include <iostream>
 #include <vector>
 
+
 class Sommet
 {
     public:
-    Sommet(std::string id,float x, float y);
+    Sommet(int id,double x, double y);
     ~Sommet();
+    double Getx();
+    double Gety();
+    int Getid();
     private:
         /// Voisinage : liste d'adjacence;
 
         /// Données spécifiques du sommet
-        std::string m_id; // Identifiant
-        float m_x, m_y; // Position
+    protected:
+        int m_id; // Identifiant
+        double m_x, m_y; // Position
 };
 
 
 #endif // SOMMET_H_INCLUDED
-*/
+

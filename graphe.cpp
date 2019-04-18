@@ -12,7 +12,8 @@ graphe::graphe(std::string nomFichier,std::string fichierpoids)
 {
     std::ifstream ifs{nomFichier};
     std::ifstream ifs2{fichierpoids};
-
+    Svgfile svgout;
+    svgout.addLine(500,200,400,100,"blue");
     if (!ifs)
         throw std::runtime_error( "Impossible d'ouvrir en lecture " + nomFichier );
     if (!ifs2)
@@ -102,27 +103,30 @@ graphe::graphe(std::string nomFichier,std::string fichierpoids)
 
         }
 
+        }
 
-
-
-    /*for (int i=0; i <nb_arete;i++){
+    int v1;
+    int v2;
+    for (int i=0; i <nb_arete;i++){
             if ((m_arete[i]->Gets1()) != (m_arete[i]->Gets2())){
-                svgout.addLine(m_sommet[m_arete[i]->Gets1].Getx(), m_sommet[m_arete[i]->Gets1].Gety(), m_sommet[m_arete[i]->Gets2].Getx(),m_sommet[m_arete[i]->Gets2].Gety(),"blue");
-                m_sommet[i].setX=0
-                m_sommet[i].setY=0
+                v1= m_arete[i]->Gets1();
+                v2=m_arete[i]->Gets2();
+
+                svgout.addLine(m_sommet[v1]->Getx(), m_sommet[v1]->Gety(), m_sommet[v2]->Getx(),m_sommet[v2]->Gety(),"blue");
+                //m_arete[i]->Sets1(0);
+                //m_arete[i]->Sets2(0);
 
             }
-                for(int j=0; i<nb_arete;j++);{
-                    if ((m_sommet[i]->Getx()) =! 500 )
-                        m_arete[i].Sets1()
-                }*/
+
+                }
     }
         //}
 
 
 
 
-}
+
+
 
 
 

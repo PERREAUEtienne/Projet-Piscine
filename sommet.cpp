@@ -1,17 +1,36 @@
-/*#include <iostream>
+#include <iostream>
 #include <queue>
 #include <stack>
-#include<unordered_map>
-#include<unordered_set>
+
 #include "sommet.h"
 #include <string>
 #include <iostream>
+#include "svgfile.h"
 
-Sommet::Sommet(std::string id,float x,float y):m_id{id},m_x{x},m_y{y}
+
+Sommet::Sommet(int id,double x,double y):m_id{id},m_x{x},m_y{y}
 {
 }
 Sommet::~Sommet()
 {
     //dtor
 }
-*/
+double Sommet::Getx(){
+
+
+    return m_x;
+
+
+
+}
+double Sommet::Gety(){
+
+
+return m_y;
+
+}
+int Sommet::Getid()
+{
+    return m_id;
+}
+
