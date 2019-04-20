@@ -3,17 +3,18 @@
 #include "graphe.h"
 #include <vector>
 #include <string>
-#include "svgfile.h"
+#include <set>
 
 
 
+Svgfile svgout;
 
 graphe::graphe(std::string nomFichier,std::string fichierpoids)
 {
     std::ifstream ifs{nomFichier};
     std::ifstream ifs2{fichierpoids};
-    Svgfile svgout;
-    svgout.addLine(500,200,400,100,"blue");
+
+
     if (!ifs)
         throw std::runtime_error( "Impossible d'ouvrir en lecture " + nomFichier );
     if (!ifs2)
@@ -24,8 +25,10 @@ graphe::graphe(std::string nomFichier,std::string fichierpoids)
     if ( ifs.fail() )
         throw std::runtime_error("Probleme lecture ordre du graphe");
     int id;
-    double x,y;
+    float x,y;
+
     //lecture des sommets
+
 
     for (int i=0; i<nb_sommet; ++i)
     {
@@ -40,20 +43,25 @@ graphe::graphe(std::string nomFichier,std::string fichierpoids)
             throw std::runtime_error("Probleme lecture données sommet");
 
         Sommet* a = new Sommet(id,x,y);
+        Sommet b(id,x,y);
+        b.build(svgout);
+
+
+
+
         m_sommet.push_back(a);
+
         //std::cout << m_sommet[1].Getx() << std::endl;
-        //std::cout << m_sommet[i]->Getid()<< std ::endl;
-        //std::cout << m_sommet[i]->Gety() << std::endl;
-        //std::cout << m_sommet[i]->Gety() << std::endl ;
-
-
-
-
+        std::cout <<"\n\n";
+        std::cout << "Sommet       Coordonnees" << std::endl;
+        std::cout << m_sommet[i]->Getid()<< "               "<< m_sommet[i]->Getx() << "   "<< m_sommet[i]->Gety() << std::endl;
 
 
     }
 
 
+
+    std::cout <<"=============================================";
     int nb_arete,nb_poids;
     ifs >> nb_arete;
     ifs2 >> nb_arete;
@@ -66,7 +74,7 @@ graphe::graphe(std::string nomFichier,std::string fichierpoids)
 
     //lecture des aretes
 
-    for (int i=0; i<nb_arete; ++i)
+    for (int j=0; j<nb_arete; j++)
     {
 
         ifs >> id;
@@ -78,57 +86,69 @@ graphe::graphe(std::string nomFichier,std::string fichierpoids)
 
         arete* b = new arete(id,s1,s2,poids1,poids2);
         m_arete.push_back(b);
-
-
-
-
-
-
-
-
-
+        std::cout <<"\n\n";
+        std::cout <<"                  \n";
+        std::cout << "Aretes       Sommets        Poids1     Poids2" << std::endl;
+        std::cout << m_arete[j]->Getida()<< "            "<< m_arete[j]->Gets1() << "     "<< m_arete[j]->Gets2() << "         "<< m_arete[j]->Getpoids1() << "          "<< m_arete[j]->Getpoids2() <<std::endl;
 
     }
+}
 
-    for (int i=0 ; i < nb_arete; i++)
-    {
-        //for (int j=0; j < nb_arete;j++){
+void graphe::kruskal()
+{
 
-        if ((m_arete[i]->Getpoids1()) > (m_arete[i+1] -> Getpoids1()))
+    std::cout <<"=============================================";
+    arete* c;
+    std::cout <<"\n\n\n";
+    std::cout<<"Kruskal:"<<std::endl;
+    for(int j=0; j<m_arete.size(); j++)
+        for (int m=1; m<m_arete.size(); m++)
         {
-            arete* c = m_arete [i];
-            m_arete[i]=m_arete[i+1];
-            m_arete[i+1]= c;
-            //std::cout << m_arete[i]->Getpoids1() << std::endl;
+            if ((m_arete[m-1]->Getpoids1()) > (m_arete[m] -> Getpoids1()))
+            {
 
-        }
-
-        }
-
-    int v1;
-    int v2;
-    for (int i=0; i <nb_arete;i++){
-            if ((m_arete[i]->Gets1()) != (m_arete[i]->Gets2())){
-                v1= m_arete[i]->Gets1();
-                v2=m_arete[i]->Gets2();
-
-                svgout.addLine(m_sommet[v1]->Getx(), m_sommet[v1]->Gety(), m_sommet[v2]->Getx(),m_sommet[v2]->Gety(),"blue");
-                //m_arete[i]->Sets1(0);
-                //m_arete[i]->Sets2(0);
-
+                c = m_arete [m-1];
+                m_arete[m-1]=m_arete[m];
+                m_arete[m]= c;
             }
 
-                }
+
+            //std::cout << m_arete[i]->Getpoids1() << std::endl;
+        }
+
+    for(int i=0; i<m_sommet.size(); i++)
+    {
+        m_sommet[i]->putCC(i);
     }
-        //}
 
+    int i=0,n=0,cc2;
 
+    do
+    {
+        if((m_sommet[m_arete[i]->Gets1()]->getCC())!= (m_sommet[m_arete[i]->Gets2()]->getCC()))
+        {
+            n++;
+            std::cout<<m_arete[i]->Getida()<<std::endl;
+            m_sommet[m_arete[i]->Gets2()]->putCC(m_sommet[m_arete[i]->Gets1()]->getCC());
+            cc2=m_sommet[m_arete[i]->Gets2()]->getCC();
+            for(int j=0; j<m_sommet.size(); j++)
+            {
+                if(cc2==m_sommet[j]->getCC())
+                    m_sommet[j]->putCC(m_sommet[m_arete[i]->Gets1()]->getCC());
+            }
+        Sommet b(m_arete[i]->Getida(),(m_sommet[m_arete[i]->Gets2()]->Getx()),(m_sommet[m_arete[i]->Gets2()]->Gety()));
+        b.Setx2(m_sommet[m_arete[i]->Gets2()]->Getx());
+        b.Sety2(m_sommet[m_arete[i]->Gets2()]->Gety());
+        b.dessin(svgout);
+        }
+        i++;
 
+    }
+    while(n!=(m_sommet.size()-1 ));
 
-
-
-
-
+    /*for(int j=0; j<m_arete.size();j++)
+        std::cout<<m_arete[j] -> Getpoids1()<<std::endl;*/
+}
 
 
 graphe::~graphe()

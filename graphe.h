@@ -5,6 +5,9 @@
 #include <iostream>
 #include "sommet.h"
 #include "arete.h"
+#include <set>
+#include <unordered_map>
+#include <unordered_set>
 
 class graphe
 {
@@ -12,6 +15,7 @@ class graphe
         ///constructeur qui charge le graphe en mémoire
         //format du fichier ordre/liste des sommets/taille/liste des arêtes
         graphe(std::string,std::string);
+        void kruskal();
         ~graphe();
 
     private:

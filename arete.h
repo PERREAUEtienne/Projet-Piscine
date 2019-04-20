@@ -15,9 +15,7 @@ class arete{
     int Gets2();
     float Getpoids1();
     float Getpoids2();
-    void Sets1(int s1);
-    void Sets2(int s2);
-    void dessinerArete(Svgfile &svgout);
+    void build(Svgfile& svgout);
 
     private:
     int m_id;
